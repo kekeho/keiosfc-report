@@ -5,6 +5,10 @@ with open('secret.json', 'r') as secretfp:
     COOKIE = json.load(secretfp)['COOKIE']
 
 
+with open('booklist.json', 'r') as booksfp:
+    BOOKS = json.load(booksfp)['books']
+
+
 
 def text_result(book_id: str, query: str):
     headers = {
