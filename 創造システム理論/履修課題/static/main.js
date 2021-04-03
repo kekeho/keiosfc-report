@@ -11,13 +11,25 @@ recognition.interimResults = true;
 recognition.maxAlternatives = 1;
 
 
+// 最新の文章が格納される
+let latestSentence = null;
+
+
 recognition.start();
 
+// 認識イベント
 recognition.onresult = function(event) {
     let results = event.results;
-    console.log(results);
+    let latestResult = results[results.length - 1][0];
+
+    if (latestSentence === null || latestResult.transcript !== latestSentence.transcript) {
+        latestSentence = latestResult;
+        console.log(latestSentence);
+    }
 }
 
+
+// recognitionが終了したら, すぐに再起動する
 recognition.onend = function(event) {
     recognition.start();
 }
