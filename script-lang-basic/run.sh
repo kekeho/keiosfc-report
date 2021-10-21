@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run -it -v $(PWD):/home slr $1
+docker run -it -v $(PWD):/home slr $@
