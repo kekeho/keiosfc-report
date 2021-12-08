@@ -12,5 +12,8 @@ RUN gem install rails
 
 WORKDIR /home
 
-CMD [ "bash", "entrypoint.sh" ]
+COPY ./ /home/
+RUN bundle install
+
+CMD [ "bash" ]
 
