@@ -1,0 +1,20 @@
+<h1>Faculties#show</h1>
+<p><b><%= @faculty.name %></b></p>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @students.each do |s| %>
+            <tr>
+                <td><%= s.id %></td>
+                <td><%= s.name %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

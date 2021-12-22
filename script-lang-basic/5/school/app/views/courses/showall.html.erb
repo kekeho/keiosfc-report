@@ -1,0 +1,20 @@
+<h1>Courses#showall</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @courses.each do |c| %>
+            <tr>
+                <td><%= c.id %></td>
+                <td><%= c.name %></td>
+                <td><a href="/courses/<%= c.id %>">link</a></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
