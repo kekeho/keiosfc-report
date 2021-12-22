@@ -165,12 +165,18 @@ class FilterPad {
         this.y = y;
         this.padx = this.x;
         this.pady = this.y+10;
+
         this.width = width;
-        this.height = height;
+        this.height = height;        
         this.padwidth = this.width;
         this.padheight = this.height-10;
+
         this.filter = new p5.Reverb();
+        this.delay = new p5.Delay();
+        this.filter.chain(this.delay);
+
         this.drywet = 0;
+        this.delaytime = 0;
     }
 
     draw() {
@@ -178,11 +184,12 @@ class FilterPad {
         rect(this.x, this.pady, this.padwidth, this.padheight);
 
         if ((this.padx <= mouseX && mouseX <= this.padx+this.padwidth) && (this.pady <= mouseY && mouseY <= this.pady+this.padheight)) {
-            text("(drywet: " + this.drywet + ")", mouseX, mouseY-10);
+            text("(reverb: " + Math.round(this.drywet*1000)/1000 + ", delay: " + Math.round(this.delaytime*1000)/1000 + ")", mouseX, mouseY-10);
             circle(mouseX, mouseY, 10);
         }
 
         this.dryWet();
+        this.delayTime();
     }
 
     dryWet() {
@@ -191,6 +198,14 @@ class FilterPad {
         }
 
         this.filter.drywet(this.drywet);
+    }
+
+    delayTime() {
+        if ((this.padx <= mouseX && mouseX <= this.padx+this.padwidth) && (this.pady <= mouseY && mouseY <= this.pady+this.padheight)) {
+            this.delaytime = map(mouseY, this.pady, this.pady+this.padheight, 0, 1);
+        }
+
+        this.delay.delayTime(this.delaytime);
     }
 }
 
@@ -250,10 +265,13 @@ function keyPressed() {
         return;
     }
 
-    if (key in ['1', '2', '3', '4']) {
-        let s = sequencers[int(key)-1]
-        track.play(s.cuetime, s.duration);
-        return;
+
+    for (let i = 0; i < 4; i++) {
+        if (key == str(i+1)) {
+            let s = sequencers[i]
+            track.play(s.cuetime, s.duration);
+            return;
+        }
     }
 
     if (key == 'q') {
