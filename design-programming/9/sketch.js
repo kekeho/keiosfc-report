@@ -1,6 +1,8 @@
 let mic;
 let sequencers = new Array(4);
 let track;
+let filterPad;
+
 let setCue = null;
 let setDuring = null;
 
@@ -70,12 +72,10 @@ class Sequencer {
     }
 
     setCue() {
-        console.log("SET QUE", this.id);
         this.cuetime = map(mouseX, track.x, track.x+track.width, 0, track.sound.duration());
     }
 
     setDuration() {
-        console.log("SET DUR",this.id);
         this.duration = map(mouseX, track.x, track.x+track.width, 0, track.sound.duration());
     }
 }
@@ -98,6 +98,8 @@ class MicTrack {
 
     startRec() {
         this.sound = new p5.SoundFile();
+        this.sound.disconnect();
+        filterPad.filter.process(this.sound, 3, 2);
         this.recorder.record(this.sound);
         this.soundvolume = new Array();
     }
@@ -107,6 +109,10 @@ class MicTrack {
     }
 
     play(cuetime, duration) {
+        if (cuetime == null || duration == null) {
+            return;
+        }
+
         this.sound.play();
         this.sound.jump(cuetime, duration-cuetime);
     }
@@ -153,6 +159,42 @@ class MicTrack {
 }
 
 
+class FilterPad {
+    constructor(x, y, width, height) {
+        this.x = x;
+        this.y = y;
+        this.padx = this.x;
+        this.pady = this.y+10;
+        this.width = width;
+        this.height = height;
+        this.padwidth = this.width;
+        this.padheight = this.height-10;
+        this.filter = new p5.Reverb();
+        this.drywet = 0;
+    }
+
+    draw() {
+        text("Filter Pad", this.x, this.y);
+        rect(this.x, this.pady, this.padwidth, this.padheight);
+
+        if ((this.padx <= mouseX && mouseX <= this.padx+this.padwidth) && (this.pady <= mouseY && mouseY <= this.pady+this.padheight)) {
+            text("(drywet: " + this.drywet + ")", mouseX, mouseY-10);
+            circle(mouseX, mouseY, 10);
+        }
+
+        this.dryWet();
+    }
+
+    dryWet() {
+        if ((this.padx <= mouseX && mouseX <= this.padx+this.padwidth) && (this.pady <= mouseY && mouseY <= this.pady+this.padheight)) {
+            this.drywet = map(mouseX, this.padx, this.padx+this.padwidth, 0, 1);
+        }
+
+        this.filter.drywet(this.drywet);
+    }
+}
+
+
 function setup() {
     createCanvas(800, 500);
     colorMode(HSB, 100);
@@ -168,12 +210,15 @@ function setup() {
     for (let i = 0; i < 4; i++) {
         sequencers[i] = new Sequencer(i, sColors[i], 160+i*120, 300,100);
     }
+
+    // create filterpad
+    filterPad = new FilterPad(160, 20, 460, 250);
 }
 
 function draw() {
     background(90);
    // draw sequencer button 
-    text("Sequencer", 160, 290)
+    text("Sequence Pad", 160, 290)
     for (let i = 0; i < sequencers.length; i++) {
         const s = sequencers[i];
         s.draw();
@@ -182,14 +227,25 @@ function draw() {
     // draw mictrack
     track.draw();
 
+    // draw filterPad
+    filterPad.draw();
+
     // draw usage
-    text("[キーボード操作]  Space: 押し続けて録音, 1/2/3/4: シーケンスの再生, q/w/e/r: シーケンスのセット", 10, 490);
+    text("[キーボード操作]  Space: 押し続けて録音, 1/2/3/4: シーケンスの再生, q/w/e/r: シーケンスのセット   [マウス] Filter Pad上でReverb操作", 10, 490);
 }
 
 
 function keyPressed() {
     if (keyCode === 32) {
         track.recmode = true;
+
+        // reset
+        for (let i = 0; i < sequencers.length; i++) {
+            const s = sequencers[i];
+            s.cuetime = null;
+            s.duration = null;
+        }
+
         track.startRec();
         return;
     }
