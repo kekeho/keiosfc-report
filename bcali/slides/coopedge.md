@@ -1,27 +1,14 @@
 ---
 marp: true
 paginate: true
-theme: default
+theme: bcali
 
 footer: Bcali B1 **kekeho**
 
 ---
-
-<style>
-
-strong {
-    color: #0a81f7;
-}
-
-section {
-    justify-content: start;
-}
-
-small {
-    font-size: 0.7rem;
-}
-
-</style>
+<!--
+class: title
+-->
 
 2022/2/28 Bcali 輪読
 
@@ -34,7 +21,12 @@ ACM Proceedings of the Web Conference 2021 (WWW '21)
 
 <small>Link: [https://dl.acm.org/doi/abs/10.1145/3442381.3449994](https://dl.acm.org/doi/abs/10.1145/3442381.3449994)</small>
 
+Bcali B1 **kekeho**
+
 ---
+<!--
+class: slides
+-->
 
 # Abstract
 
