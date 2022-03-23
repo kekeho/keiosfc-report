@@ -74,3 +74,12 @@ section.slides h1 {
     border-bottom: 1px solid rgb(95, 95, 95);
     margin-bottom: 1rem;
 }
+
+section.slides div.row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: space-around;
+}
+
+section.slides div.col {
+}
