@@ -1,0 +1,89 @@
+/* @theme bcali */
+
+/* default marp theme */
+@import "default";
+
+/* noto-sans font */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+
+section {
+    font-family: 'Noto Sans JP', 'Noto Sans', sans-serif;
+}
+
+
+strong {
+    color: #0a81f7;
+}
+
+section {
+   justify-content: start;
+}
+
+small {
+    font-size: 0.7rem;
+}
+
+
+/* TITLE */
+
+section.title {
+    background-color: #ffffff;
+    justify-content: space-between;
+}
+
+
+/* title */
+section.title div.main-title h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+/* subtitle */
+section.title div.main-title h2 {
+    margin-top: 0;
+    font-size: 1.3rem;
+    font-weight: normal;
+}
+
+/* author */
+section.title h3 {
+    font-size: 1.3rem;
+}
+
+section.title footer {
+    display: none;
+}
+
+/* img */
+section.title figure::after {
+    content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 40%;
+	height: 100%;
+	background-image: linear-gradient(270deg, transparent 0 60%, #FFF 100%);
+}
+
+/* SLIDES */
+
+section.slides h1 {
+    padding-bottom: 0.1rem;
+    border-bottom: 1px solid rgb(95, 95, 95);
+    margin-bottom: 1rem;
+}
+
+section.slides div.row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: space-around;
+}
+
+section.slides div.col {
+}
+
+section.slides small.mid {
+    font-size: 0.8rem;
+}
