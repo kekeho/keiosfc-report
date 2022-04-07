@@ -81,5 +81,9 @@ section.slides div.row {
     align-content: space-around;
 }
 
-section.slides div.col {
+section.slides div.row div.col-img {
+    display: flex;
+    width: 50%;
+    margin-left: 4rem;
+    flex-wrap: wrap;
 }
