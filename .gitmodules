@@ -1,0 +1,3 @@
+[submodule "kumo_bcali/nand2tetris/projects"]
+	path = kumo_bcali/nand2tetris/projects
+	url = git@github.com:kekeho/nand2tetris
